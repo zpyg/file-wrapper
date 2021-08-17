@@ -30,5 +30,7 @@ wrapping = np.c_[wrapping, wrapping_alpha]
 eof_y, eof_x, eof_z = np.squeeze(np.where(wrapping[:, :] == EOF_FLAG))
 # 在 alpha 通道存储 EOF 位置
 wrapping[eof_y, eof_x, 3] = {0: 51, 1: 102, 2: 153}[eof_z]
+# 删除多余部分
+wrapping = wrapping[:eof_y+1]
 # 转换类型为 uint8 后保存
 Image.fromarray(wrapping.astype(np.uint8)).save(argv[2])
